@@ -14,12 +14,6 @@ namespace AspNet.Identity.Dapper
     {
         private DbManager db;
 
-        class Temp
-        {
-            public string ClaimType { get; set; }
-            public string ClaimValue { get; set; }
-        };
-
         /// <summary>
         /// Constructor that takes a DbManager instance 
         /// </summary>
@@ -38,7 +32,7 @@ namespace AspNet.Identity.Dapper
         {
            ClaimsIdentity claims = new ClaimsIdentity();
 
-           foreach (var c in db.Connection.Query<Temp>("Select * from MemberClaim where MemberId=@memberId", new { memberId = memberId }))
+           foreach (var c in db.Connection.Query("Select * from MemberClaim where MemberId=@memberId", new { memberId = memberId }))
            {
                claims.AddClaim(new Claim(c.ClaimType, c.ClaimValue));
            }
