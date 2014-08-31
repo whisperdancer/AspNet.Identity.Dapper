@@ -34,9 +34,11 @@ namespace AspNet.Identity.Dapper
                     where UserId = @userId 
                     and LoginProvider = @loginProvider 
                     and ProviderKey = @providerKey",
-                new {   userId=member.Id,
-                        loginProvider=login.LoginProvider,
-                        providerKey=login.ProviderKey
+                new 
+                {   
+                    userId=member.Id,
+                    loginProvider=login.LoginProvider,
+                    providerKey=login.ProviderKey
                 });
         }
 
@@ -79,7 +81,11 @@ namespace AspNet.Identity.Dapper
         {
             return db.Connection.ExecuteScalar<int>(@"Select UserId from MemberLogin 
                 where LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                    new { loginProvider = MemberLogin.LoginProvider, providerKey=MemberLogin.ProviderKey });
+                        new 
+                        {   
+                            loginProvider = MemberLogin.LoginProvider,
+                            providerKey=MemberLogin.ProviderKey
+                        });
         }
 
         /// <summary>

@@ -9,9 +9,16 @@ using System.Threading.Tasks;
 
 namespace AspNet.Identity.Dapper
 {
+    /// <summary>
+    /// A simple database connection manager
+    /// </summary>
     public class DbManager : IDisposable
     {
         private IDbConnection _conn { get; set; }
+        
+        /// <summary>
+        /// Return open connection
+        /// </summary>
         public IDbConnection Connection
         {
             get
@@ -23,6 +30,10 @@ namespace AspNet.Identity.Dapper
             }
         }
 
+        /// <summary>
+        /// Create a new Sql database connection
+        /// </summary>
+        /// <param name="connString">The name of the connection string</param>
         public DbManager(string connString)
         {
             // Use first?
@@ -33,9 +44,8 @@ namespace AspNet.Identity.Dapper
         }
 
         /// <summary>
-        /// Provides access to the currently open shared connection (or null if none)
+        /// Close and dispose of the database connection
         /// </summary>
-
         public void Dispose()
         {
             if (_conn != null)
@@ -45,7 +55,6 @@ namespace AspNet.Identity.Dapper
                     _conn.Close();
                     _conn.Dispose();
                 }
-
                 _conn = null;
             }
         }

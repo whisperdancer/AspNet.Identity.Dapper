@@ -60,8 +60,10 @@ namespace AspNet.Identity.Dapper
         {
             db.Connection.Execute(@"Insert into MemberClaim (ClaimValue, ClaimType, MemberId) 
                 values (@value, @type, @userId)", 
-                    new { value=MemberClaim.Value,
-                    type=MemberClaim.Type,userId=memberId});
+                    new { 
+                        value=MemberClaim.Value,
+                        type=MemberClaim.Type,userId=memberId
+                        });
         }
 
         /// <summary>
@@ -74,7 +76,11 @@ namespace AspNet.Identity.Dapper
         {
             db.Connection.Execute(@"Delete from MemberClaim 
             where UserId = @memberId and @ClaimValue = @value and ClaimType = @type",
-                new { memberId = member.Id, ClaimValue=claim.Value,type=claim.Type });
+                new { 
+                    memberId = member.Id,
+                    ClaimValue=claim.Value,
+                    type=claim.Type 
+                });
         }
     }
 }

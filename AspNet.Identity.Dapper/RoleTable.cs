@@ -103,12 +103,15 @@ namespace AspNet.Identity.Dapper
         {
             db.Connection
             .Execute(@"
-                    UPDATE
-                        Role
+                    UPDATE Role
                     SET
                         Name = @name
                     WHERE
-                        Id = @id", new {name=role.Name,id=role.Id });
+                        Id = @id", 
+                    new {
+                        name=role.Name,
+                        id=role.Id 
+                    });
         }
     }
 }

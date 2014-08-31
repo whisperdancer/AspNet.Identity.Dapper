@@ -118,7 +118,8 @@ namespace AspNet.Identity.Dapper
                                     (UserName,  PasswordHash, SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed, AccessFailedCount,LockoutEnabled,LockoutEndDateUtc,TwoFactorEnabled)
                             values  (@name, @pwdHash, @SecStamp,@email,@emailconfirmed,@phonenumber,@phonenumberconfirmed,@accesscount,@lockoutenabled,@lockoutenddate,@twofactorenabled)
                             SELECT Cast(SCOPE_IDENTITY() as int)",
-                             new {  name=member.UserName,
+                             new {  
+                                    name=member.UserName,
                                     pwdHash=member.PasswordHash,
                                     SecStamp=member.SecurityStamp,
                                     email=member.Email,
@@ -130,7 +131,8 @@ namespace AspNet.Identity.Dapper
                                     lockoutenddate=member.LockoutEndDateUtc,
                                     twofactorenabled=member.TwoFactorEnabled
                              });
-           member.Id = id;
+            // we need to set the id to the returned identity generated from the db
+            member.Id = id;
         }
 
         /// <summary>
@@ -166,19 +168,20 @@ namespace AspNet.Identity.Dapper
                 Email=@email, EmailConfirmed=@emailconfirmed, PhoneNumber=@phonenumber, PhoneNumberConfirmed=@phonenumberconfirmed,
                 AccessFailedCount=@accesscount, LockoutEnabled=@lockoutenabled, LockoutEndDateUtc=@lockoutenddate, TwoFactorEnabled=@twofactorenabled  
                 WHERE Id = @memberId",
-                                   new{
-                userName= member.UserName,
-                pswHash= member.PasswordHash,
-                secStamp= member.SecurityStamp,
-                memberId= member.Id,
-                email= member.Email,
-                emailconfirmed= member.EmailConfirmed,
-                phonenumber= member.PhoneNumber,
-                phonenumberconfirmed= member.PhoneNumberConfirmed,
-                accesscount= member.AccessFailedCount,
-                lockoutenabled= member.LockoutEnabled,
-                lockoutenddate= member.LockoutEndDateUtc,
-                twofactorenabled= member.TwoFactorEnabled
+                new
+                {
+                    userName= member.UserName,
+                    pswHash= member.PasswordHash,
+                    secStamp= member.SecurityStamp,
+                    memberId= member.Id,
+                    email= member.Email,
+                    emailconfirmed= member.EmailConfirmed,
+                    phonenumber= member.PhoneNumber,
+                    phonenumberconfirmed= member.PhoneNumberConfirmed,
+                    accesscount= member.AccessFailedCount,
+                    lockoutenabled= member.LockoutEnabled,
+                    lockoutenddate= member.LockoutEndDateUtc,
+                    twofactorenabled= member.TwoFactorEnabled
                 }            
            );
         }
