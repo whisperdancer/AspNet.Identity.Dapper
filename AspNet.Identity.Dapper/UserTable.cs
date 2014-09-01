@@ -50,8 +50,8 @@ namespace AspNet.Identity.Dapper
         /// <returns></returns>
         public TUser GetUserById(int memberId)
         {
-            return db.Connection.Query<TUser>("Select * from Member where Id=@MemberId", new { MemberId=memberId })
-                .First();
+            return db.Connection.Query<TUser>("Select * from Member where Id=@MemberId", new { MemberId = memberId })
+                .FirstOrDefault();
         }
 
         /// <summary>
