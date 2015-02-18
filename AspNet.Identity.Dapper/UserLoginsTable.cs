@@ -96,7 +96,7 @@ namespace AspNet.Identity.Dapper
         public List<UserLoginInfo> FindByUserId(int memberId)
         {
             return db.Connection.Query<UserLoginInfo>("Select * from MemberLogin where MemberId = @memberId", new {memberId=memberId })
-                .ToList();
+                .Select(x => new UserLoginInfo(x.LoginProvider, x.ProviderKey)).ToList();
         }
     }
 }
