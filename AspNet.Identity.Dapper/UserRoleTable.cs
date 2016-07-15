@@ -51,8 +51,8 @@ namespace AspNet.Identity.Dapper
         /// <returns></returns>
         public void Insert(IdentityMember member, int roleId)
         {
-            db.Connection.Execute(@"Insert into AspNetUserRoles (UserId, RoleId) values (@userId, @roleId",
-                new { userId = member.Id, roleId = roleId });
+            db.Connection.Execute(@"Insert into MemberRole (MemberId, RoleId) values (@memberId, @roleId)",
+                new { memberId = member.Id, roleId = roleId });
         }
     }
 }
