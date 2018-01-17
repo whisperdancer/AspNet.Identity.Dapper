@@ -95,8 +95,21 @@ namespace AspNet.Identity.Dapper
         /// <returns></returns>
         public List<UserLoginInfo> FindByUserId(int memberId)
         {
-            return db.Connection.Query<UserLoginInfo>("Select * from MemberLogin where MemberId = @memberId", new {memberId=memberId })
+            return db.Connection.Query<UserLoginInfoEx>("Select * from MemberLogin where MemberId = @memberId", new { memberId = memberId })
+                .Select(x => new UserLoginInfo(x.LoginProvider, x.ProviderKey))
                 .ToList();
         }
+    }
+    public class UserLoginInfoEx
+    {
+        /// <summary>
+        ///     Provider for the linked login, i.e. Facebook, Google, etc.
+        /// </summary>
+        public string LoginProvider { get; set; }
+
+        /// <summary>
+        ///     User specific key for the login provider
+        /// </summary>
+        public string ProviderKey { get; set; }
     }
 }
